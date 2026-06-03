@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boy SMS Hub v2 - 100% Work</title>
+    <style>
+        /* CSS DASAR */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #0f172a; 
+            color: #f8fafc; 
+            padding: 15px; 
+            margin: 0; 
+        }
+        .container { max-width: 1000px; margin: auto; text-align: center; }
+        h1 { color: #38bdf8; font-size: 28px; letter-spacing: -1px; margin-bottom: 5px; }
+        .status-bar { font-size: 13px; color: #4ade80; margin-bottom: 20px; display: block; }
+
+        /* GRID NOMOR */
+        .number-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
+            gap: 12px; 
+            margin: 20px 0; 
+        }
+        .num-card { 
+            background: #1e293b; 
+            padding: 12px; 
+            border-radius: 12px; 
+            border: 1px solid #334155; 
+            text-decoration: none; 
+            color: white; 
+            transition: 0.3s;
+        }
+        .num-card:hover { border-color: #38bdf8; background: #26354d; }
+        .num-card.active { border: 2px solid #38bdf8; background: #334155; box-shadow: 0 0 15px rgba(56, 189, 248, 0.3); }
+        .num-card span { font-size: 12px; color: #94a3b8; }
+        .num-card b { display: block; color: #38bdf8; font-size: 16px; margin-top: 4px; }
+
+        /* EFEK PULSE TOMBOL REFRESH (IKLAN) */
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        .refresh-link { 
+            display: inline-block; 
+            padding: 16px 35px; 
+            background: #ef4444; 
+            color: white; 
+            font-weight: bold; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            margin: 15px 0;
+            font-size: 18px;
+            animation: pulse 2s infinite; /* EFEK GOYANG DISINI */
+            cursor: pointer;
+            border: none;
+        }
+
+        /* AREA IKLAN BANNER */
+        .ad-box { 
+            background: #000; 
+            min-height: 90px; 
+            margin: 20px 0; 
+            border: 1px dashed #334155; 
+            border-radius: 10px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #475569;
+            font-size: 12px;
+        }
+        
+        /* JENDELA SMS (IFRAME) */
+        .sms-container { background: #1e293b; padding: 10px; border-radius: 20px; border: 1px solid #334155; }
+        .sms-window { 
+            width: 100%; 
+            height: 800px; /* Lebih tinggi biar lega */
+            border: none;
+            border-radius: 10px; 
+            background: white;
+        }
+
+        .footer { margin-top: 30px; font-size: 11px; color: #475569; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>📩 BOY SMS HUB v2</h1>
+        <span class="status-bar">● Server Online & Berjalan Lancar</span>
+
+        <!-- DAFTAR NOMOR -->
+        <div class="number-grid">
+            <% numbers.forEach(n => { %>
+                <a href="/?url=<%= encodeURIComponent(n.url) %>&number=<%= encodeURIComponent(n.number) %>" 
+                   class="num-card <%= currentNum === n.number ? 'active' : '' %>">
+                    <span><%= n.country %></span>
+                    <b><%= n.number %></b>
+                </a>
+            <% }) %>
+        </div>
+
+        <!-- TOMBOL REFRESH + IKLAN ADSTERRA KAMU -->
+        <a href="https://www.effectivecpmnetwork.com/n4bae1heyy?key=2d9f5a22ace30cd2af4c6b27a04e3c78" 
+           target="_blank" 
+           onclick="setTimeout(() => { window.location.reload(); }, 1000);" 
+           class="refresh-link">
+           🔥 KLIK DISINI JIKA SMS BELUM MUNCUL
+        </a>
+
+        <!-- AREA UNTUK IKLAN BANNER (ADSTERRA) -->
+        <div class="ad-box">
+            <!-- NANTI PASTE KODE SCRIPT BANNER ADSTERRA DISINI -->
+            Space Iklan Banner 728x90
+        </div>
+
+        <div class="sms-container">
+            <p style="margin-bottom: 10px;">SMS untuk: <b style="color: #38bdf8;"><%= currentNum %></b></p>
+            <!-- JENDELA SMS ASLI -->
+            <iframe src="<%= currentUrl %>" class="sms-window"></iframe>
+        </div>
+
+        <div class="footer">
+            &copy; 2026 Boy Tools - Gunakan dengan Bijak
+        </div>
+    </div>
+
+</body>
+</html>
